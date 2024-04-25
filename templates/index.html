@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Spectrum</title>
+    <style>
+        /* Responsive CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* background-color: #98ebf1; */
+            background-image: url(https://t4.ftcdn.net/jpg/06/10/43/89/360_F_610438945_oRLr15XzfkffK8LC14lLNJlSf5qGU5fv.jpg);
+            background-position: 0%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            height: 60%;
+            width: 80%;
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: #4bedd2;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 30px;
+            border: 1px solid #f6f2f2fe;
+            border-radius: 5px;
+            box-sizing: border-box;
+            resize: none;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            margin-top: 30px;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 25px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sentiment Spectrum</h1>
+        <form id="sentiment-form" action="/predict_sentiment" method="POST">
+            <label for="review">Enter your review:</label><br>
+            <textarea id="review" name="review" rows="4" cols="50"></textarea><br>
+            <input type="submit" value="Predict">
+        </form>
+        <div class="loading" id="loading-spinner"></div>
+        {% if sentiment %}
+        <p>Review: {{ review }}</p>
+        <p>Review sentiment is: {% if sentiment == "Positive" %} Positive<br><span style="font-size: 36px;"> 😊 </span> {% else %}Negative<br><span style="font-size: 36px;"> 😔 </span>{% endif %}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('sentiment-form').addEventListener('submit', function() {
+            document.getElementById('loading-spinner').classList.add('show');
+        });
+    </script>
+</body>
+</html>
